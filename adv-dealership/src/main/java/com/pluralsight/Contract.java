@@ -56,15 +56,4 @@ public abstract class Contract {
 
     public abstract double getMonthlyPayment();
 
-    @Override
-    public String toString() {
-        return "Contract{" +
-                "contractDate='" + contractDate + '\'' +
-                ", customerName='" + customerName + '\'' +
-                ", email='" + email + '\'' +
-                ", vehicleSold=" + vehicleSold +
-                ", total=" + total +
-                ", monthlyPayment=" + monthlyPayment +
-                '}';
-    }
 }
