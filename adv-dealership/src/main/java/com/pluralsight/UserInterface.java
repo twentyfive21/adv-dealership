@@ -70,6 +70,9 @@ public class UserInterface {
                 case "9":
                     processRemoveVehicleRequest();
                     break;
+                case "10":
+                    processSellOrLeaseRequest();
+                    break;
                 case "0":
                     System.out.println("\nYou have chosen to leave! Have a nice day and come again!");
                     running = false;
@@ -94,9 +97,15 @@ public class UserInterface {
         System.out.println("(7) List all vehicles");
         System.out.println("(8) Add a vehicle");
         System.out.println("(9) Remove a vehicle");
+        System.out.println("(10) Sell or Lease a vehicle");
         // did 0 instead of 99 for user to type less. Choice 0 is used for quitting
         System.out.println("(0) Quit");
         System.out.print("Selection: ");
+    }
+
+    // TODO sell or lease request method
+    public void processSellOrLeaseRequest(){
+
     }
 
     public void processGetByPriceRequest() {
