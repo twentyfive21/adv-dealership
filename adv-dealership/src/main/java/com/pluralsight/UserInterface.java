@@ -115,7 +115,6 @@ public class UserInterface {
         System.out.print("Selection: ");
     }
 
-    // TODO sell and lease request method
     public void processSellOrLeaseRequest(){
         System.out.println("~~~~ You have chosen sale or lease a vehicle ~~~~");
         System.out.println("(1) Sale");
