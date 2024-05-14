@@ -45,6 +45,8 @@ public class AdminUserInterface {
                 bufferedReader.close(); // Close the file after reading for resetting the file pointer
 
                 bufferedReader = new BufferedReader(new FileReader("contract.csv")); // Reopen the file
+
+                // user chose to select all contracts
                 if(all){
                     System.out.println("~~~~ All Contracts ~~~~");
                     lineCount = 1;
@@ -53,14 +55,21 @@ public class AdminUserInterface {
                         lineCount++;
                     }
                 }
+
+                // if user chose to only display last 10 contracts
                 if (!all){
                     System.out.println("~~~~ Last 10 Contracts ~~~~");
                     int lastTen = lineCount - 10;
-                    while ((input = bufferedReader.readLine()) != null && lineCount > lastTen ){
-                        System.out.printf("Line %d %s\n",lastTen, input);
-                        lastTen++;
+                    int currentCount = 0;
+                    while ((input = bufferedReader.readLine()) != null ){
+                        if( currentCount >= lastTen ){
+                            System.out.printf("Line %d %s\n",lastTen, input);
+                            lastTen++;
+                        }
+                        currentCount++;
                     }
                 }
+                // close the reader
                 bufferedReader.close();
             }catch (Exception e){
                 System.out.println("Error logging in ");
