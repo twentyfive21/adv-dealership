@@ -16,7 +16,7 @@ public class LeaseContract extends Contract{
     }
 
     public double getLeaseFee() {
-        return leaseFee;
+        return Double.parseDouble(String.format("%.2f", leaseFee));
     }
 
     public void setLeaseFee(double leaseFee) {
@@ -24,7 +24,7 @@ public class LeaseContract extends Contract{
     }
 
     public double getExpectedValue() {
-        return expectedValue;
+        return Double.parseDouble(String.format("%.2f", expectedValue));
     }
 
     public void setExpectedValue(double expectedValue) {
@@ -33,8 +33,8 @@ public class LeaseContract extends Contract{
 
     @Override
     public double getTotalPrice(){
-        double totalPrice = getTotalPrice() + leaseFee + expectedValue;
-        return totalPrice;
+        double totalPrice = getVehicleSold().getPrice() + leaseFee + expectedValue;
+        return Double.parseDouble(String.format("%.2f", totalPrice));
     }
 
     @Override
@@ -45,7 +45,7 @@ public class LeaseContract extends Contract{
         double interest = 0.4;
         int loanTerm = 36;
         double monthly = (total * interest) / (1 - Math.pow(1 + interest, -loanTerm));
-        return monthly;
+        return Double.parseDouble(String.format("%.2f", monthly));
     }
 
     @Override

@@ -27,7 +27,8 @@ public class ContractDataManager {
 
             // create writer and file writer
             BufferedWriter bufWriter = new BufferedWriter(new FileWriter("contract.csv", true));
-
+            // new line for next contract that is written
+            bufWriter.newLine();
             // if lease instance
             if(contract instanceof LeaseContract){
                 // downcast
@@ -38,11 +39,6 @@ public class ContractDataManager {
                     customerEmail + pipe + vin + pipe + year + pipe + make + pipe + model
                     + pipe + type + pipe + color + pipe + odometer + pipe + originalPrice + pipe
                     + total + pipe + expected + pipe + leaseFee + pipe + payment);
-                // new line for next contract that is written
-                bufWriter.newLine();
-                // close writer
-                bufWriter.flush();
-                bufWriter.close();
             }
 
             // if sales instance
@@ -60,13 +56,10 @@ public class ContractDataManager {
                         + pipe + type + pipe + color + pipe + odometer + pipe + originalPrice + pipe
                         + salesTax + pipe + recordingFee + pipe + processFee + pipe + total + pipe +
                         financeOption + pipe + payment);
-                // new line for next contract that is written
-                bufWriter.newLine();
-                // close writer
-                bufWriter.flush();
-                bufWriter.close();
             }
-
+            // close writer
+            bufWriter.flush();
+            bufWriter.close();
         } catch(Exception e){
             System.out.println("Error writing to contract file");
         }

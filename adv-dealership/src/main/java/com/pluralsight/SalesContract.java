@@ -18,7 +18,7 @@ public class SalesContract extends Contract{
     // getters and setters
 
     public double getSalesTax() {
-        return salesTax;
+        return Double.parseDouble(String.format("%.2f", salesTax));
     }
 
     public void setSalesTax(double salesTax) {
@@ -26,7 +26,7 @@ public class SalesContract extends Contract{
     }
 
     public int getRecordingFee() {
-        return recordingFee;
+        return Integer.parseInt(String.format("%.2f", recordingFee));
     }
 
     public void setRecordingFee(int recordingFee){
@@ -34,7 +34,7 @@ public class SalesContract extends Contract{
     }
 
     public int getProcessingFee() {
-        return processingFee;
+        return Integer.parseInt(String.format("%.2f", processingFee));
     }
 
     public void setProcessingFee(int processingFee) {
@@ -65,7 +65,7 @@ public class SalesContract extends Contract{
             // P = (T × r) / (1 - (1 + r)^-n)
             // t = total price , r interest rate, n is loan term 36months
             double monthly = (totalPrice * interestRate) / (1 - Math.pow(1 + interestRate, -loanTerm));
-            return monthly;
+            return Double.parseDouble(String.format("%.2f", monthly));
         }
         return 0;
     }
