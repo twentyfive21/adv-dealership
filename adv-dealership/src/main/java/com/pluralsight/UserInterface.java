@@ -126,6 +126,7 @@ public class UserInterface {
     public Vehicle processContractType(String type) {
         System.out.printf("\nYou have chosen %s contract\n", type);
 
+        // ask for choice if sale contract
         boolean userChoice = false;
         if(type.equals("sale")){
             System.out.println("Would you like to finance ? y(yes) or n(no)");
@@ -145,6 +146,7 @@ public class UserInterface {
             }
         }
 
+        // get contract data for csv
         String contractDate = LocalDate.now().getYear() + "" + LocalDate.now().getDayOfMonth() + "" + LocalDate.now().getMonthValue();
         System.out.print("Please provide your name: ");
         String customerName = scanner.nextLine().trim();
@@ -154,13 +156,17 @@ public class UserInterface {
         int vinNum = scanner.nextInt();
         // clear buffer
         scanner.nextLine();
+
+        // set to null unless match is found
         Vehicle vehicleSold = null;
+        // check for matching vin for contract
         for (Vehicle vehicle : dealership.getAllVehicles()) {
             if (vinNum == vehicle.getVin()) {
                 vehicleSold = vehicle;
             }
         }
 
+        // create new object or print error based on search
         if(vehicleSold == null){
             System.out.println("*** Error no matching vehicle with that vin ***");
         } else if (type.equals("sale")){
@@ -169,15 +175,15 @@ public class UserInterface {
             contractDataManager.saveContract(sale);
         } else {
             LeaseContract lease = new LeaseContract(contractDate,customerName,email,vehicleSold);
+            // pass contract to be written
             contractDataManager.saveContract(lease);
         }
-
-
+        // display removed vehicle
         System.out.printf("\n~~~~ Vehicle %s contract for %s ~~~~\n",type,customerName);
         System.out.println(vehicleSold);
         // delete from inventory
         dealership.removeVehicle(vehicleSold);
-        // delete from csv
+        // delete from csv it reads current inventory and rewrites entire csv
         saveNewDealership();
         return vehicleSold;
     }
