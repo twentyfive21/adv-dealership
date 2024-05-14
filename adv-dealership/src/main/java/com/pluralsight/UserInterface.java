@@ -1,5 +1,6 @@
 package com.pluralsight;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -8,6 +9,7 @@ public class UserInterface {
     private Dealership dealership;
     // Initialization of a Scanner object for user input
     Scanner scanner = new Scanner(System.in);
+    ContractDataManager contractDataManager = new ContractDataManager();
 
     public UserInterface() {
         // empty constructor
@@ -97,16 +99,87 @@ public class UserInterface {
         System.out.println("(7) List all vehicles");
         System.out.println("(8) Add a vehicle");
         System.out.println("(9) Remove a vehicle");
-        System.out.println("(10) Sell or Lease a vehicle");
+        System.out.println("(10) Sale or Lease a vehicle");
         // did 0 instead of 99 for user to type less. Choice 0 is used for quitting
         System.out.println("(0) Quit");
         System.out.print("Selection: ");
     }
 
-    // TODO sell or lease request method
+    // TODO sell and lease request method
     public void processSellOrLeaseRequest(){
+        System.out.println("~~~~ You have chosen sale or lease a vehicle ~~~~");
+        System.out.println("(1) Sale");
+        System.out.println("(2) Lease");
+        System.out.print("Selection: ");
+        String choice = scanner.nextLine();
+        switch (choice){
+            case "1" : saleVehicle();
+                break;
+            case "2" : leaseVehicle();
+                break;
+            default: System.out.println("Error please pick 1 or 2");
+                    processSellOrLeaseRequest();
+                    break;
+        }
+
+                // delete in inventory csv, array list after wriitng to file
+    }
+
+    public Vehicle saleVehicle() {
+        System.out.println("You have chosen sale contract");
+        System.out.println("Would you like to finance ? y(yes) or n(no)");
+        System.out.print("Selection: ");
+        String choice = scanner.nextLine().toLowerCase().trim();
+        boolean userChoice = false;
+        switch (choice) {
+            case "y":
+                userChoice = true;
+                break;
+            case "n":
+                userChoice = false;
+                break;
+            default:
+                System.out.println("Please pick yes or no!");
+                saleVehicle();
+                break;
+        }
+        String contractDate = LocalDate.now().getYear() + "" + LocalDate.now().getDayOfMonth() + "" + LocalDate.now().getMonthValue();
+        System.out.print("Please provide your name: ");
+        String customerName = scanner.nextLine().trim();
+        System.out.print("Please provide your email: ");
+        String email = scanner.nextLine().trim();
+        System.out.print("Please provide vin number of the car you want: ");
+        int vinNum = scanner.nextInt();
+        // clear buffer
+        scanner.nextLine();
+        Vehicle vehicleSold = null;
+        for (Vehicle vehicle : dealership.getAllVehicles()) {
+            if (vinNum == vehicle.getVin()) {
+                vehicleSold = vehicle;
+            }
+        }
+
+        if(vehicleSold == null){
+            System.out.println("*** Error no matching vehicle with that vin ***");
+        } else {
+            SalesContract sales = new SalesContract(contractDate,customerName,email,vehicleSold,userChoice);
+            // pass contract to be written
+            contractDataManager.saveContract(sales);
+            System.out.printf("\n~~~~ Vehicle has been sold to %s ~~~~\n", customerName);
+            System.out.println(vehicleSold);
+            // delete from inventory
+            dealership.removeVehicle(vehicleSold);
+            // delete from csv
+            saveNewDealership();
+        }
+
+        return vehicleSold;
+    }
+
+    public void leaseVehicle(){
 
     }
+
 
     public void processGetByPriceRequest() {
         try { // Process user's request to find vehicles within a price range
