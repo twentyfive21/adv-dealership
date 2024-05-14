@@ -15,6 +15,22 @@ public class LeaseContract extends Contract{
         this.expectedValue = vehicleSold.getPrice() * 0.5;  // Expected value is 50% of vehicle price
     }
 
+    public double getLeaseFee() {
+        return leaseFee;
+    }
+
+    public void setLeaseFee(double leaseFee) {
+        this.leaseFee = leaseFee;
+    }
+
+    public double getExpectedValue() {
+        return expectedValue;
+    }
+
+    public void setExpectedValue(double expectedValue) {
+        this.expectedValue = expectedValue;
+    }
+
     @Override
     public double getTotalPrice(){
         double totalPrice = getTotalPrice() + leaseFee + expectedValue;
@@ -24,7 +40,7 @@ public class LeaseContract extends Contract{
     @Override
     public double getMonthlyPayment(){
         // P = (T × r) / (1 - (1 + r)^-n)
-        // t = total price , r intrest rate, n is loan term 36months
+        // t = total price , r interest rate, n is loan term 36months
         double total = getTotalPrice();
         double interest = 0.4;
         int loanTerm = 36;
