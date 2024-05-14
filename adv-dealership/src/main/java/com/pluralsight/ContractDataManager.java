@@ -21,34 +21,52 @@ public class ContractDataManager {
             String color = contract.getVehicleSold().getColor();
             double total = contract.getTotalPrice();
             double payment = contract.getMonthlyPayment();
+            String contractDate = contract.getContractDate();
+            double originalPrice = contract.getVehicleSold().getPrice();
 
 
             // create writer and file writer
-            BufferedWriter bufWriter = new BufferedWriter(new FileWriter("contract.csv"));
+            BufferedWriter bufWriter = new BufferedWriter(new FileWriter("contract.csv", true));
 
             // if lease instance
             if(contract instanceof LeaseContract){
-            bufWriter.write("LEASE" + pipe + vin + pipe + customerName + pipe +
-                    customerEmail + pipe + odometer + pipe + year + pipe + make + pipe + model
-                    + pipe + type + pipe + color + pipe + total + pipe + payment);
+                // downcast
+                LeaseContract lease = (LeaseContract) contract;
+                double expected = lease.getExpectedValue();
+                double leaseFee = lease.getLeaseFee();
+            bufWriter.write("LEASE" + pipe + contractDate + pipe + customerName + pipe +
+                    customerEmail + pipe + vin + pipe + year + pipe + make + pipe + model
+                    + pipe + type + pipe + color + pipe + odometer + pipe + originalPrice + pipe
+                    + total + pipe + expected + pipe + leaseFee + pipe + payment);
+                // new line for next contract that is written
+                bufWriter.newLine();
+                // close writer
+                bufWriter.flush();
+                bufWriter.close();
             }
 
             // if sales instance
             if (contract instanceof SalesContract){
                 // check if they chose to finance or not
-                String financeOption = ((SalesContract) contract).isFinance() ? "YES" : "NO";
-                // write to file the sale
-                bufWriter.write("SALE" + pipe + vin + pipe + customerName + pipe +
-                        customerEmail + pipe + odometer + pipe + year + pipe + make + pipe + model
-                        + pipe + type + pipe + color + pipe + total + pipe +
-                        financeOption + pipe + payment);
+                SalesContract sales = (SalesContract) contract;
 
+                String financeOption = sales.isFinance() ? "YES" : "NO";
+                double salesTax = sales.getSalesTax();
+                double processFee = sales.getProcessingFee();
+                int recordingFee = sales.getRecordingFee();
+                // write to file the sale
+                bufWriter.write("SALE" + pipe + contractDate + pipe + customerName + pipe +
+                        customerEmail + pipe + vin + pipe + year + pipe + make + pipe + model
+                        + pipe + type + pipe + color + pipe + odometer + pipe + originalPrice + pipe
+                        + salesTax + pipe + recordingFee + pipe + processFee + pipe + total + pipe +
+                        financeOption + pipe + payment);
+                // new line for next contract that is written
+                bufWriter.newLine();
+                // close writer
+                bufWriter.flush();
+                bufWriter.close();
             }
-            // new line for next contract that is written
-            bufWriter.newLine();
-            // close writer
-            // bufWriter.flush();
-            bufWriter.close();
+
         } catch(Exception e){
             System.out.println("Error writing to contract file");
         }
