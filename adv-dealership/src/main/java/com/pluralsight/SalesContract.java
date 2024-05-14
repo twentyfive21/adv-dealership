@@ -3,7 +3,7 @@ package com.pluralsight;
 // SalesContract class inherits from Contract class
 public class SalesContract extends Contract{
     private double salesTax;
-    final private int recordingFee = 100;
+    private int recordingFee = 100;
     private int processingFee;
     private boolean finance;
 
@@ -21,8 +21,16 @@ public class SalesContract extends Contract{
         return salesTax;
     }
 
+    public void setSalesTax(double salesTax) {
+        this.salesTax = salesTax;
+    }
+
     public int getRecordingFee() {
         return recordingFee;
+    }
+
+    public void setRecordingFee(int recordingFee){
+        this.recordingFee = recordingFee;
     }
 
     public int getProcessingFee() {
@@ -44,7 +52,7 @@ public class SalesContract extends Contract{
     @Override
     public double getTotalPrice(){
         double salesTotal = getVehicleSold().getPrice() + salesTax + recordingFee + processingFee;
-        return salesTotal;
+        return Double.parseDouble(String.format("%.2f", salesTotal));
     }
 
     @Override
