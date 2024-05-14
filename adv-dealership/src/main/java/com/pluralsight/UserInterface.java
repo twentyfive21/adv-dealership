@@ -75,6 +75,9 @@ public class UserInterface {
                 case "10":
                     processSellOrLeaseRequest();
                     break;
+                case "11":
+                    processAdmin();
+                    break;
                 case "0":
                     System.out.println("\nYou have chosen to leave! Have a nice day and come again!");
                     running = false;
@@ -85,6 +88,12 @@ public class UserInterface {
             }
         }
 
+    }
+
+    public void processAdmin(){
+        AdminUserInterface adminUserInterface = new AdminUserInterface();
+        // allow admin to login and display contracts password is 123
+        adminUserInterface.display();
     }
 
     public void displayChoices() {
@@ -100,6 +109,7 @@ public class UserInterface {
         System.out.println("(8) Add a vehicle");
         System.out.println("(9) Remove a vehicle");
         System.out.println("(10) Sale or Lease a vehicle");
+        System.out.println("(11) Admin");
         // did 0 instead of 99 for user to type less. Choice 0 is used for quitting
         System.out.println("(0) Quit");
         System.out.print("Selection: ");
