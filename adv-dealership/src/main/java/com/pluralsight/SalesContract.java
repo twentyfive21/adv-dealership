@@ -26,7 +26,7 @@ public class SalesContract extends Contract{
     }
 
     public int getRecordingFee() {
-        return Integer.parseInt(String.format("%.2f", recordingFee));
+        return recordingFee;
     }
 
     public void setRecordingFee(int recordingFee){
@@ -34,7 +34,7 @@ public class SalesContract extends Contract{
     }
 
     public int getProcessingFee() {
-        return Integer.parseInt(String.format("%.2f", processingFee));
+        return processingFee;
     }
 
     public void setProcessingFee(int processingFee) {

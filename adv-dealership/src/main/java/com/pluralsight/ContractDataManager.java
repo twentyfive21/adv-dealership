@@ -6,6 +6,7 @@ import java.io.FileWriter;
 public class ContractDataManager {
 
     public void saveContract(Contract contract){
+
         try{ // set pipe variable for writing
             final String pipe = "|";
 
@@ -44,24 +45,27 @@ public class ContractDataManager {
             // if sales instance
             if (contract instanceof SalesContract){
                 // check if they chose to finance or not
+                System.out.println("Test1");
                 SalesContract sales = (SalesContract) contract;
-
-                String financeOption = sales.isFinance() ? "YES" : "NO";
+                System.out.println("Test2");
+                boolean financeOption = sales.isFinance();
                 double salesTax = sales.getSalesTax();
-                double processFee = sales.getProcessingFee();
+                int processFee = sales.getProcessingFee();
                 int recordingFee = sales.getRecordingFee();
-                // write to file the sale
-                bufWriter.write("SALE" + pipe + contractDate + pipe + customerName + pipe +
-                        customerEmail + pipe + vin + pipe + year + pipe + make + pipe + model
+                System.out.println("Test3");
+                bufWriter.write("SALE" + pipe + contractDate + pipe + customerName + pipe + customerEmail
+                        + pipe + vin + pipe + year + pipe + make + pipe + model
                         + pipe + type + pipe + color + pipe + odometer + pipe + originalPrice + pipe
                         + salesTax + pipe + recordingFee + pipe + processFee + pipe + total + pipe +
                         financeOption + pipe + payment);
+
             }
             // close writer
             bufWriter.flush();
             bufWriter.close();
         } catch(Exception e){
             System.out.println("Error writing to contract file");
+            e.printStackTrace();
         }
 
     }
