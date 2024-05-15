@@ -45,14 +45,11 @@ public class ContractDataManager {
             // if sales instance
             if (contract instanceof SalesContract){
                 // check if they chose to finance or not
-                System.out.println("Test1");
                 SalesContract sales = (SalesContract) contract;
-                System.out.println("Test2");
                 boolean financeOption = sales.isFinance();
                 double salesTax = sales.getSalesTax();
                 int processFee = sales.getProcessingFee();
                 int recordingFee = sales.getRecordingFee();
-                System.out.println("Test3");
                 bufWriter.write("SALE" + pipe + contractDate + pipe + customerName + pipe + customerEmail
                         + pipe + vin + pipe + year + pipe + make + pipe + model
                         + pipe + type + pipe + color + pipe + odometer + pipe + originalPrice + pipe
